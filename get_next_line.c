@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:40:04 by tom               #+#    #+#             */
-/*   Updated: 2024/10/20 12:31:12 by tom              ###   ########.fr       */
+/*   Updated: 2024/10/20 14:40:41 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*readfile(int fd, char *res)
 		free(res);
 		res = ft_strjoin(tmp, buffer);
 		free(buffer);
+		free(tmp);
 		if (ft_strchr(res, '\n'))
 			break ;
 	}
@@ -45,6 +46,7 @@ char	*ft_getline(char *buffer)
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	line = ft_calloc(i + 2, sizeof(char));
+	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 	{
 		line[i] = buffer[i];
@@ -88,6 +90,8 @@ char	*get_next_line(int fd)
 	
 	if (fd < 0 || BUFFER_SIZE <=0 || read(fd, 0, 0) < 0)
 		return (NULL);
+	if (!buffer)
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	buffer = readfile(fd, buffer);
 	if (!buffer)
 		return (NULL);
@@ -105,9 +109,20 @@ int main(int argc, char **argv)
 	tmp = get_next_line(fd);
 	while (tmp != NULL)
 	{
-		printf("%s\n", tmp);
+		printf("%s", tmp);
 		free(tmp);
 		tmp = get_next_line(fd);
 	}
+	// char	*buffer;
+	// char	*line;
+	
+	// if (fd < 0 || BUFFER_SIZE <=0 || read(fd, 0, 0) < 0)
+	// 	return (0);
+	// buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	// buffer = readfile(fd, buffer);
+	// if (!buffer)
+	// 	return (0);
+	// line = ft_getline(buffer);
+	// printf("%s", line);
 	close(fd);
 }
