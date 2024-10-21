@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:10:24 by togauthi          #+#    #+#             */
-/*   Updated: 2024/10/20 16:12:12 by togauthi         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:44:39 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(void)
 	char	*tmp;
 	int		fd;
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("read_error.txt", O_RDONLY);
 	tmp = get_next_line(fd);
 	while (tmp)
 	{

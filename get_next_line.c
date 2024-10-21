@@ -6,12 +6,24 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:40:04 by tom               #+#    #+#             */
-/*   Updated: 2024/10/20 16:39:24 by togauthi         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:48:18 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+
+int	fillbuffer(int fd, char **buffer)
+{
+	int	bytes;
+
+	bytes = 0;
+	*buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!*buffer)
+		return (-10);
+	bytes = read(fd, *buffer, BUFFER_SIZE);
+	return (bytes);
+}
 
 char	*readfile(int fd, char *res)
 {
@@ -22,19 +34,19 @@ char	*readfile(int fd, char *res)
 	bytes = 1;
 	while (bytes > 0)
 	{
-		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		if (!buffer)
+		bytes = fillbuffer(fd, &buffer);
+		if (bytes < 0)
 		{
+			if (bytes != -10)
+				free(buffer);
 			free(res);
 			return (NULL);
 		}
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		buffer[bytes] = 0;
 		tmp = ft_strdup(res);
 		free(res);
 		res = ft_strjoin(tmp, buffer);
-		free(buffer);
 		free(tmp);
+		free(buffer);
 		if (ft_strchr(res, '\n'))
 			break ;
 	}
@@ -95,8 +107,10 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
 		return (NULL);
+	}
 	if (!buffer)
 		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	buffer = readfile(fd, buffer);

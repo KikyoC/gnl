@@ -6,7 +6,7 @@
 #    By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/19 19:37:58 by tom               #+#    #+#              #
-#    Updated: 2024/10/20 15:19:48 by togauthi         ###   ########.fr        #
+#    Updated: 2024/10/21 15:02:25 by togauthi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -I.
 
 %.o: %.c
-		$(CC) -o $@ -c $^ $(CFLAGS) 
+		$(CC) -o $@ -c $^ $(CFLAGS) -g
 
 $(NAME): $(OBJS)
 
