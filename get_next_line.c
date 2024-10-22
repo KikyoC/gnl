@@ -6,7 +6,7 @@
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:40:04 by tom               #+#    #+#             */
-/*   Updated: 2024/10/21 16:48:18 by togauthi         ###   ########.fr       */
+/*   Updated: 2024/10/22 09:35:00 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int	fillbuffer(int fd, char **buffer)
 	bytes = 0;
 	*buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!*buffer)
+	{
 		return (-10);
+	}
 	bytes = read(fd, *buffer, BUFFER_SIZE);
 	return (bytes);
 }
