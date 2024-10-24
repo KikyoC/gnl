@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: togauthi <togauthi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:40:04 by tom               #+#    #+#             */
-/*   Updated: 2024/10/24 17:25:17 by togauthi         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:40:36 by togauthi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	fillbuffer(int fd, char **buffer)
 {
@@ -107,17 +107,17 @@ char	*update_buffer(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!buffer)
-		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	buffer = readfile(fd, buffer);
-	if (!buffer)
+	if (!buffer[fd])
+		buffer[fd] = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buffer[fd] = readfile(fd, buffer[fd]);
+	if (!buffer[fd])
 		return (NULL);
-	line = ft_getline(buffer);
-	buffer = update_buffer(buffer);
+	line = ft_getline(buffer[fd]);
+	buffer[fd] = update_buffer(buffer[fd]);
 	return (line);
 }
